@@ -1,40 +1,69 @@
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import { Type } from '@sinclair/typebox';
+export interface StockQuote {
+  ticker: string,
+  currentPrice: number;
+  change: number;
+  percentChange: number;
+  high: number;
+  low: number;
+  open: number;
+  previousClose: number;
+  lastUpdated: Date;
+}
 
-export const HealthBar = Type.Object({
-    status: Type.String()
-});
+export interface StockProfile {
+  country: string;
+  currency: string;
+  estimateCurrency: string;
+  exchange: string;
+  finnhubIndustry: string;
+  ipo: string;
+  logo: string;
+  marketCapitalization: number;
+  name: string;
+  phone: string;
+  shareOutstanding: number;
+  ticker: string;
+  weburl: string;
+}
 
-export const StockInfo = Type.Object({
-    symbol: Type.String(),
-    name: Type.String(),
-    industry: Type.String(),
-    sector: Type.String(),
-    currentPrice: Type.Number(),
-    market_cap: Type.Number(),
-    currency: Type.String()
-})
+export interface CompanyNews {
+  category: string;
+  datetime: number;
+  headline: string;
+  id: number;
+  image: string;
+  related: string;
+  source: string;
+  summary: string;
+  url: string;
+}
 
-export const PriceData = Type.Object({
-    date: Type.Date(),
-    open: Type.Number(),
-    close: Type.Number(),
-    high: Type.Number(),
-    low: Type.Number(),
-    volume: Type.Number()
-})
+export interface NewsArticle { 
+  category: string;
+  datetime: number;
+  headline: string;
+  id: number;
+  image: string;
+  related: string;
+  source: string;
+  summary: string;
+  url: string;
+}
 
-export const stockHistory = Type.Object({
-    symbol: Type.String(),
-    period: Type.String(),
-    prices: Type.Array(PriceData)
-})
+export interface Recommendation {
+  period: string;
+  strongBuy: number;
+  buy: number;
+  hold: number;
+  sell: number;
+  strongSell: number;
+}
 
-export const stockStats = Type.Object({
-    symbol: Type.String(),
-    period: Type.String(),
-    averagePrices: Type.Number(),
-    high: Type.Number(),
-    low: Type.Number(),
-    volatility: Type.Number()
-})
+export interface PriceTarget {
+  lastUpdate: number;
+  symbol: string;
+  targetHighPrice: number;
+  targetLowPrice: number;
+  targetMeanPrice: number;
+  targetMedianPrice: number;
+}

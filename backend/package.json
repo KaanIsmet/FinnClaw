@@ -11,9 +11,10 @@
   "dependencies": {
     "@fastify/type-provider-typebox": "^6.1.0",
     "@sinclair/typebox": "^0.34.48",
+    "axios": "^1.13.6",
+    "dotenv": "^17.3.1",
     "fastify": "^4.9.0",
-    "pino": "^7.10.3",
-    "yahoo-finance-api": "^0.2.1"
+    "pino": "^7.10.3"
   },
   "keywords": [],
   "author": "",

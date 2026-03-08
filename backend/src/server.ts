@@ -1,6 +1,7 @@
 import fastify, { FastifyRequest, FastifyReply} from  "fastify";
+import { stockQuoteRoute, stockProfileRoute } from './routes'
+const app = fastify({logger: true});
 
-const app = fastify({logger: true})
 
 app.get('/', function (req: FastifyRequest, reply: FastifyReply) {
     return {
@@ -13,6 +14,9 @@ app.get('/health', (req: FastifyRequest, reply: FastifyReply) => {
         message: 'Ok'
     };
 });
+
+app.register(stockQuoteRoute)
+app.register(stockProfileRoute)
 
 const start = async (): Promise<void> => {
     try {
