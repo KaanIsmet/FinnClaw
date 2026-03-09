@@ -1,6 +1,6 @@
-import fastify, { FastifyRequest, FastifyReply, FastifyInstance} from "fastify";
-import { getStockQuote, getStockProfile } from "./finnhubService";
-const app = fastify({logger: true})
+import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
+import { getStockQuote, getStockProfile } from "../services/financeService.js";
+import multipart, { MultipartFile } from '@fastify/multipart'
 
 interface StockQuery {
   symbol: string;
@@ -39,4 +39,26 @@ export async function stockProfileRoute(app: FastifyInstance) {
       reply.status(500).send({ error: error.message });
     }
   });
+}
+
+export async function importCSVRoute(app: FastifyInstance) {
+  // ensure the multipart plugin is registered for this app instance
+  await app.register(multipart)
+
+  app.post('/importCSV', async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      // `request.file` exists when the @fastify/multipart plugin is registered.
+      const fileFn = (request as any).file as (() => Promise<MultipartFile>) | undefined
+      const data = fileFn ? await fileFn() : undefined
+      if (!data) {
+        return reply.status(400).send({ error: "Unable to read file (multipart not enabled or no file)" })
+      }
+
+      // Process the CSV file here (stream or buffer)
+      return reply.send({ message: "File uploaded successfully" })
+
+    } catch (error: any) {
+      reply.status(500).send({ error: error.message })
+    }
+  })
 }

@@ -1,5 +1,6 @@
 import fastify, { FastifyRequest, FastifyReply} from  "fastify";
-import { stockQuoteRoute, stockProfileRoute } from './routes'
+import { stockQuoteRoute, stockProfileRoute } from './routes/routes.js'
+import { registerUserRoute, getUserByIdRoute, getAllUsersRoute } from './routes/userRoutes.js'
 const app = fastify({logger: true});
 
 
@@ -17,6 +18,9 @@ app.get('/health', (req: FastifyRequest, reply: FastifyReply) => {
 
 app.register(stockQuoteRoute)
 app.register(stockProfileRoute)
+app.register(registerUserRoute)
+app.register(getUserByIdRoute)
+app.register(getAllUsersRoute)
 
 const start = async (): Promise<void> => {
     try {

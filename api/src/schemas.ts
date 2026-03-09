@@ -67,3 +67,13 @@ export interface PriceTarget {
   targetMeanPrice: number;
   targetMedianPrice: number;
 }
+
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  passwordHash: string | null;
+  emailVerified: boolean;
+  role: string;
+  createdAt: Date;
+}
