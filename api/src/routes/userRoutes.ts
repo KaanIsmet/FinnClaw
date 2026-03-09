@@ -4,6 +4,10 @@ import { User } from '../schemas.js'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 
 async function registerUser(user: Omit<User, 'id'>): Promise<User> {
+    if (!user.username || !user.email || !user.passwordHash) {
+        throw new Error('Missing required user fields');
+    }
+    console.log('User registering...', user);
     return await prisma.user.create({
         data: {
             id: crypto.randomUUID(),
@@ -14,7 +18,7 @@ async function registerUser(user: Omit<User, 'id'>): Promise<User> {
             role: user.role
         }
     });
-    console.log('User registered successfully:', user);
+    
 }
 
 export async function registerUserRoute(app: FastifyInstance): Promise<void> {
