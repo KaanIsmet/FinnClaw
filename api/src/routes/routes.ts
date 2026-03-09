@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
-import { getStockQuote, getStockProfile } from "./services/financeService.js";
+import { getStockQuote, getStockProfile } from "../services/financeService.js";
 import multipart, { MultipartFile } from '@fastify/multipart'
 
 interface StockQuery {
