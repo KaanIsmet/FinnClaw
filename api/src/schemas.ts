@@ -69,8 +69,11 @@ export interface PriceTarget {
 }
 
 export interface User {
-  id: number;
+  id: string;
   username: string;
   email: string;
   passwordHash: string;
+  emailVerified: boolean;
+  role: string;
+  createdAt: Date;
 }
