@@ -18,7 +18,6 @@ async function registerUser(user: Omit<User, 'id'>): Promise<User> {
             role: user.role
         }
     });
-    
 }
 
 export async function registerUserRoute(app: FastifyInstance): Promise<void> {

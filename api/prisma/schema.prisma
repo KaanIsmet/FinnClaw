@@ -9,10 +9,87 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
+  clerkId      String?  @unique
   username     String   @unique
   email        String   @unique
   passwordHash String?  @db.VarChar(255)
   emailVerified Boolean @default(false)
   role         String   @default("USER")
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  watchlists   Watchlist[]
+  portfolios   Portfolio[]
+  alerts       Alert[]
+}
+
+model Stock {
+  id          String   @id @default(uuid())
+  symbol      String   @unique  // "AAPL", "TSLA"
+  name        String            // "Apple Inc."
+  exchange    String?           // "NASDAQ"
+  logoUrl     String?
+  industry    String?
+  marketCap   Float?
+  updatedAt   DateTime @updatedAt
+
+  watchlistItems  WatchlistItem[]
+  holdings        Holding[]
+  alerts          Alert[]
+}
+
+model Watchlist {
+  id        String          @id @default(uuid())
+  name      String          @default("My Watchlist")
+  userId    String
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime        @default(now())
+
+  items     WatchlistItem[]
+}
+
+model WatchlistItem {
+  id          String    @id @default(uuid())
+  watchlistId String
+  watchlist   Watchlist @relation(fields: [watchlistId], references: [id], onDelete: Cascade)
+  stockId     String
+  stock       Stock     @relation(fields: [stockId], references: [id])
+  addedAt     DateTime  @default(now())
+
+  @@unique([watchlistId, stockId])  // prevent duplicate stocks in same watchlist
+}
+
+model Portfolio {
+  id        String    @id @default(uuid())
+  name      String    @default("My Portfolio")
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+
+  holdings  Holding[]
+}
+
+model Holding {
+  id          String    @id @default(uuid())
+  portfolioId String
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  stockId     String
+  stock       Stock     @relation(fields: [stockId], references: [id])
+  shares      Float
+  avgCost     Float     // average cost basis per share
+  createdAt   DateTime  @default(now())
+
+  @@unique([portfolioId, stockId])
+}
+
+model Alert {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stockId     String
+  stock       Stock     @relation(fields: [stockId], references: [id])
+  type        String    // "PRICE_ABOVE", "PRICE_BELOW", "PERCENT_CHANGE"
+  threshold   Float
+  triggered   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
 }
