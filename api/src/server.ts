@@ -24,7 +24,7 @@ app.register(getAllUsersRoute)
 
 const start = async (): Promise<void> => {
     try {
-        await app.listen({ port: 3000, host: '0.0.0.0' });
+        await app.listen({ port: Number(process.env.PORT) || 3000, host: '0.0.0.0' });
         console.log('Server is running on http://localhost:3000');
     } catch (err) {
         app.log.error(err);
