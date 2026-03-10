@@ -1,4 +1,4 @@
-import { StockQuote, StockProfile } from "../schemas";
+import { StockQuote, StockProfile } from "../schemas.js";
 import axios from 'axios';
 import 'dotenv/config';
 
