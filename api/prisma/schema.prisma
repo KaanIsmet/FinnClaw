@@ -24,18 +24,28 @@ model User {
 }
 
 model Stock {
-  id          String   @id @default(uuid())
-  symbol      String   @unique  // "AAPL", "TSLA"
-  name        String            // "Apple Inc."
-  exchange    String?           // "NASDAQ"
-  logoUrl     String?
-  industry    String?
-  marketCap   Float?
-  updatedAt   DateTime @updatedAt
+  id                   String    @id @default(uuid())
+  ticker               String    @unique
+  name                 String
+  country              String
+  currency             String
+  estimateCurrency     String?
+  exchange             String
+  finnhubIndustry      String
+  ipo                  DateTime
+  logo                 String?
+  marketCapitalization Float
+  phone                String?
+  shareOutstanding     Float
+  weburl               String?
 
-  watchlistItems  WatchlistItem[]
-  holdings        Holding[]
-  alerts          Alert[]
+  priceUpdatedAt       DateTime?
+  updatedAt            DateTime  @updatedAt
+  createdAt            DateTime  @default(now())
+
+  watchlistItems       WatchlistItem[]
+  holdings             Holding[]
+  alerts               Alert[]
 }
 
 model Watchlist {

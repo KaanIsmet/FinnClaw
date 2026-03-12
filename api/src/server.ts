@@ -1,6 +1,6 @@
 import fastify, { FastifyRequest, FastifyReply} from  "fastify";
 import { stockQuoteRoute, stockProfileRoute } from './routes/routes.js'
-import { registerUserRoute, getUserByIdRoute, getAllUsersRoute } from './routes/userRoutes.js'
+import { registerUserRoute, getUserByIdRoute, getAllUsersRoute } from './routes/loginRegisterRoutes.js'
 const app = fastify({logger: true});
 
 
