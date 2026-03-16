@@ -39,6 +39,7 @@ export async function getStockProfile(symbol: string) {
     try {
         const response = await axios.get(`https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${apiKey}`)
         const data = response.data
+        const formattedIpo = new Date(data.ipo).toISOString();
         if (data.country === '')
             throw new Error(`Symbol ${symbol} doesn't exist`);
         const stockProfile: StockProfile = {
@@ -47,7 +48,7 @@ export async function getStockProfile(symbol: string) {
             estimateCurrency: data.estimateCurrency,
             exchange: data.exchange,
             finnhubIndustry: data.finnhubIndustry,
-            ipo: data.ipo,
+            ipo: formattedIpo,
             logo: data.logo,
             marketCapitalization: data.marketCapitalization,
             name: data.name,

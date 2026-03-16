@@ -63,7 +63,7 @@ model WatchlistItem {
   watchlistId String
   watchlist   Watchlist @relation(fields: [watchlistId], references: [id], onDelete: Cascade)
   stockId     String
-  stock       Stock     @relation(fields: [stockId], references: [id])
+  stock       Stock     @relation(fields: [stockId], references: [id], onDelete: Restrict)
   addedAt     DateTime  @default(now())
 
   @@unique([watchlistId, stockId])  // prevent duplicate stocks in same watchlist
