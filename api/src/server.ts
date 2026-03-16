@@ -1,6 +1,7 @@
 import fastify, { FastifyRequest, FastifyReply} from  "fastify";
 import { stockQuoteRoute, stockProfileRoute } from './routes/routes.js'
 import { registerUserRoute, getUserByIdRoute, getAllUsersRoute } from './routes/loginRegisterRoutes.js'
+import { watchlistRoutes } from "./routes/WatchlistRoutes.js";
 const app = fastify({logger: true});
 
 
@@ -16,11 +17,13 @@ app.get('/health', (req: FastifyRequest, reply: FastifyReply) => {
     };
 });
 
-app.register(stockQuoteRoute)
-app.register(stockProfileRoute)
-app.register(registerUserRoute)
-app.register(getUserByIdRoute)
-app.register(getAllUsersRoute)
+app.register(stockQuoteRoute);
+app.register(stockProfileRoute);
+app.register(registerUserRoute);
+app.register(getUserByIdRoute);
+app.register(getAllUsersRoute);
+
+[...watchlistRoutes].forEach(route => app.register(route));
 
 const start = async (): Promise<void> => {
     try {
